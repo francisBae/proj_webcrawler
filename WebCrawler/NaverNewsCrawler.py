@@ -8,33 +8,23 @@ import json
 import re
 
 #토큰은 별도로 저장
-import TokenInfo as tk
+from . import TokenInfo as tk
 print(tk.client_id)
 print(tk.client_secret)
 
+#참고 코드 : https://koreanfoodie.me/118 네이버 뉴스 API로 뉴스 크롤링하기! (파이썬으로 네이버 오픈 API 뉴스 크롤러 만들기)
+
 # keyword_1 : 첫번째 키워드
 # keyword_2 : 두번째 키워드
-# keyword_3 : 세번째 키워드
 # 첫번째 키워드 + 두번째 키워드로 검색이 진행됩니다.
 # 예를 들어, 첫번째 키워드가 ['개', '고양이', '토끼'] 이고
 # 두번째 키워드가 ['1', '2'] 이면,
 # 개 1, 개 2, 고양이 1, 고양이 2, 토끼 1, 토끼 2 처럼
 # 키워드 1 개수 * 키워드 2 개수 만큼 검색 쿼리가 생성됩니다.
-# 세번째 키워드는, 추가적으로 단일 키워드를 검색하고 싶은 경우 활용합니다.
-
-keyword_1 = ['삼성전자', '카카오', '네이버', 'SK', '현대']
-keyword_2 = ['증권', '주식', '친환경']
 
 display = 5 #30  # 각 키워드 당 검색해서 저장할 기사 수
 
 newsDict = dict() #기업별 사전 형태로 조회
-
-#
-#
-# 여기서부터는 코드입니다 (신경 안쓰셔도 됩니다!)
-#
-#
-
 
 # Input(str) : 뉴스에 검색할 단어 넣기
 def news_search(min_name):
@@ -63,7 +53,6 @@ def news_search(min_name):
     else:
         print("Error Code:" + rescode)
 
-
 # extract urls from correspoding response_body
 def get_url(resbody):
     title_link = {}
@@ -72,7 +61,6 @@ def get_url(resbody):
         # print(resbody['items'][i]['title'])
         title_link[resbody['items'][i]['title']] = resbody['items'][i]['link']
     return title_link
-
 
 # using url list, crawl html and store them as .html
 def url_to_html(title_links, cur_keyword1):
@@ -95,40 +83,17 @@ def url_to_html(title_links, cur_keyword1):
 # 키워드 1 + 키워드 2 조합으로 검색
 def keyword_combined(keyword_1, keyword_2):
     for i in range(len(keyword_1)):
-        '''
-        # Make folders for each articles
-        # Uncomment it when you use "2" in url_to_html function
-        if not os.path.exists(keyword_1[i]):
-            os.makedirs(keyword_1[i])
-        '''
-        title_links = {}
 
-        #newsList = list()
+        title_links = {}
 
         if len(keyword_2) == 0:
             title_links = {**title_links, **(news_search(keyword_1[i]))}
-
 
         else:
             for j in range(len(keyword_2)):
                 title_links = {**title_links, **(news_search(keyword_1[i] + " " + keyword_2[j]))}
 
-                #newsList.append(title_links)
-
-        #print(newsList)
-        # print("타이틀링크1")
-        # print(type(title_links))
-
         newsDict[keyword_1[i]] = title_links #newsList
 
-    #        url_to_html(title_links, keyword_1[i])
-
-        # for title_link in title_links:
-        #     print("== "+keyword_1[i]+" ==")
-        #     print(title_link)
-
-
     return newsDict
-#if __name__ == '__main__':
-#    keyword_combined(keyword_1, keyword_2)
 

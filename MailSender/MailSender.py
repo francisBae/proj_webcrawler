@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 from email import encoders
 
 #메일 전송을 위한 정보
-import MailSenderInfo as msi
+from . import MailSenderInfo as msi
 
 def sendEmail(email_targets, title,contents):
     # 로그인하기

@@ -6,7 +6,7 @@ print(pymysql.version_info) # (1, 4, 0, 'final', 0)
 config = {
      'host' : '127.0.0.1',
      'user' : 'root',
-     'password' : '',
+     'password' : '1234',
      'database' : 'db_webcrawler',
      'port' : 3306,
      'charset':'utf8',

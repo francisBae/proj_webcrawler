@@ -7,3 +7,5 @@ class SubscriberInfo:
     def printInfo(self):
         print(self.subscriber_seqno+" | 이름 : "+self.subscriber_name +" | 전화번호 : "
               +self.subscriber_phone+" | 이메일 : "+self.subscriber_email)
+    def getSubScriber(self):
+        return self
