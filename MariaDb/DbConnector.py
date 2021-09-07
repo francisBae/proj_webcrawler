@@ -1,7 +1,7 @@
 import sqlite3
 import pymysql
 
-print(pymysql.version_info) # (1, 4, 0, 'final', 0)
+# print(pymysql.version_info) # (1, 4, 0, 'final', 0)
 
 config = {
      'host' : '127.0.0.1',
@@ -44,4 +44,26 @@ def selectQuery(query):
           print('db 연동 error :', e)
      finally:
           cursor.close()
+          conn.close()
+
+
+def executeQuery(query, val):
+     #insert, update, delete
+     print(query)
+     try:
+          # db 환경변수 -> db 연동 객체
+          conn = pymysql.connect(**config)
+
+          # **config : config에 들어있는 7개의 환경변수를 이용해서 DB를 연동한다는 의미
+          # sql 실행 객체
+          cursor = conn.cursor()
+          # sql = "select * from TB_SUBSCRIBER_INFO"
+          cursor.execute(query, val)
+
+     except Exception as e:
+          print('db 연동 error :', e)
+     finally:
+
+          cursor.close()
+          conn.commit()
           conn.close()

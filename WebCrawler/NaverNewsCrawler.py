@@ -9,8 +9,6 @@ import re
 
 #토큰은 별도로 저장
 from . import TokenInfo as tk
-print(tk.client_id)
-print(tk.client_secret)
 
 #참고 코드 : https://koreanfoodie.me/118 네이버 뉴스 API로 뉴스 크롤링하기! (파이썬으로 네이버 오픈 API 뉴스 크롤러 만들기)
 
@@ -47,7 +45,11 @@ def news_search(min_name):
         title_link = {}
         for i in range(0, len(response_body['items'])):
             title_link[response_body['items'][i]['title']] = \
-                response_body['items'][i]['link']
+                {'link':response_body['items'][i]['link'], 'pubDate':response_body['items'][i]['pubDate'],
+                 'description':response_body['items'][i]['description']}
+                # [response_body['items'][i]['link'],response_body['items'][i]['pubDate'],response_body['items'][i]['description']]
+
+
         return title_link
 
     else:

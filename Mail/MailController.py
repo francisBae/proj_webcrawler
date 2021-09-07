@@ -1,4 +1,5 @@
 from datetime import datetime
+from Utils import DateConverter as dc
 
 def getCurTimeNewsMailTitle():
     dtime = datetime.today().strftime("%Y%m%d%H%M")
@@ -16,13 +17,15 @@ def getRefinedNewsContentsForHtml(newsDict):
         # contents += "<div><font size=\"3px\" face=\"돋움\">"
         subcnt = 1
         for title_key in newsDict[key]:
+            # print(newsDict[key][title_key])
 
-            contents+="<a href="+newsDict[key][title_key]+">"+str(subcnt)+") "+title_key +"</a><br>"
+            contents+="<a href="+newsDict[key][title_key]["link"]+">"+str(subcnt)+") "+title_key +"</a> ("+\
+                      str(dc.convertStringToDate(newsDict[key][title_key]["pubDate"]))+")<br>"
 
             # contents+=str(subcnt)+") "+title_key + " : " + newsDict[key][title_key]+"<br>"
             subcnt+=1
 
-            print(title_key+" : "+newsDict[key][title_key]) #제목:링크
+            print(title_key+" : "+newsDict[key][title_key]["link"]) #제목:링크
         contents+"</font><br><br><br></div></body></html>"
-
+        # print(contents)
     return contents

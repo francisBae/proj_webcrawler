@@ -1,10 +1,11 @@
 #사용자지정 py임포트
 from datetime import datetime
-from Subscriber import SubscriberInfo, SubscriberController as ssc
+from Subscriber import SubscriberController as ssc
 from WebCrawler import NaverNewsCrawler as nnc
 from MailSender import MailSender as ms
 from Mail import MailController as mc
 from Keyword import CompanyController as cc, InterestController as ic, KeywordController as kc
+from News import NewsController as nc
 
 def main():
     # 구독자 리스트 조회
@@ -27,11 +28,19 @@ def main():
     #네이버 뉴스 API 호출
     newsDict = nnc.keyword_combined(keyword_1,keyword_2)
 
+
+
     #이메일용으로 내용 정제
     contents = mc.getRefinedNewsContentsForHtml(newsDict)
 
     #발송 모듈 호출
     ms.sendEmail(email_targets, title, contents)
+
+    #DB 저장 위해 리스트 변환
+    newsList = nc.getNewsInfoListFromDict(newsDict)
+
+    #DB에 뉴스 정보 저장
+    nc.insertNewsInfo(newsList)
 
 if __name__ == "__main__":
 	main()

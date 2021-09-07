@@ -13,3 +13,12 @@ def getCompanyInfoForKeyword():
 
 def getInterestInfoForKeyword():
     return "select * from TB_INTEREST_INFO where interest_keyword_use_yn = 'Y'"
+
+# def getNewsInfoLastSeq():
+#     return "SELECT LASTVAL(SEQ_NEWS_INFO)"
+
+def insertNewsInfo():
+    return "insert into TB_NEWS_INFO(news_seqno,news_link,news_title,news_date,news_by_company_name,news_description"+\
+           ",sys_creation_date,sys_update_date)"\
+           +"values (NEXTVAL(SEQ_NEWS_INFO), %s, %s, %s, %s, %s, SYSDATE(), SYSDATE())"
+
