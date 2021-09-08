@@ -9,7 +9,7 @@ def getCompanyList():
     for com in companyDataset:
         company = CompanyInfo.CompanyInfo(str(com['company_seqno']), com['company_ssc'], com['company_name'],
                                           com['company_website'],
-                                          com['company_keyword_use_yn'], com['company_stock_use_yn'], com['company_image'])
+                                          com['company_keyword_use_yn'], com['company_stock_use_yn'], com['company_world_stock_yn'], com['company_image'])
         company.printInfo()
         companyList.append(company)
 
@@ -23,7 +23,7 @@ def getCompanyByName(company_name):
     for com in companyDataset:
         company = CompanyInfo.CompanyInfo(str(com['company_seqno']), com['company_ssc'], com['company_name'],
                                           com['company_website'],
-                                          com['company_keyword_use_yn'], com['company_stock_use_yn'], com['company_image'])
+                                          com['company_keyword_use_yn'], com['company_stock_use_yn'], com['company_world_stock_yn'], com['company_image'])
         company.printInfo()
         break
 
