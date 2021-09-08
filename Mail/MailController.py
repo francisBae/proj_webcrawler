@@ -120,7 +120,11 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
         print(company_name)  # 삼성전자
         company = cc.getCompanyByName(company_name)
         stockNumber = company.company_ssc
-        stockLink = "https://finance.naver.com/item/main.nhn?code="+stockNumber
+
+        if company.company_world_stock_yn == 'Y':
+            stockLink = "https://m.stock.naver.com/index.html#/worldstock/stock/" + stockNumber+".O"
+        else:
+            stockLink = "https://finance.naver.com/item/main.nhn?code=" + stockNumber
         company_image = company.company_image
 
         html+=\
@@ -134,7 +138,7 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
               </td>
             </tr>
                 <tr>
-                  <td style="padding:30px;background-color:#ffffff;">
+                  <td style="padding:30px;font-size:24px;line-height:28px;font-weight:bold;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
                     <h1 style="margin-top:0;margin-bottom:16px;font-size:26px;line-height:32px;font-weight:bold;letter-spacing:-0.02em;">"""\
                     +company_name+" ("+"""<a href=\""""+(stockLink)+"""">"""+stockNumber+"</a>)"\
                     +"""</h1></tr>"""
@@ -146,7 +150,7 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
             news_pupdate = str(dc.convertStringToDate(newsDict[company_name][newstitle]["pubDate"]))
 
             html+=\
-                    """<tr><td style="padding:10px 30px 10px 30px;background-color:#ffffff;">
+                    """<tr><td style="padding:20px;font-size:18px;line-height:28px;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
                     <p style="margin:0;">"""\
                     +news_pupdate\
                     +"""</p>
@@ -164,42 +168,8 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
 
 
     html+=\
-                        """<tr>
-                          <td style="padding:35px 30px 11px 30px;font-size:0;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
-                            <!--[if mso]>
-                            <table role="presentation" width="100%">
-                            <tr>
-                            <td style="width:145px;" align="left" valign="top">
-                            <![endif]-->
-                            <div class="col-sml" style="display:inline-block;width:100%;max-width:145px;vertical-align:top;text-align:left;font-family:Arial,sans-serif;font-size:14px;color:#363636;">
-                              <img src="https://assets.codepen.io/210284/icon.png" width="115" alt="" style="width:80%;max-width:115px;margin-bottom:20px;">
-                            </div>
-                            <!--[if mso]>
-                            </td>
-                            <td style="width:395px;padding-bottom:20px;" valign="top">
-                            <![endif]-->
-                            <div class="col-lge" style="display:inline-block;width:100%;max-width:395px;vertical-align:top;padding-bottom:20px;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
-                              <p style="margin-top:0;margin-bottom:12px;">Nullam mollis sapien vel cursus fermentum. Integer porttitor augue id ligula facilisis pharetra. In eu ex et elit ultricies ornare nec ac ex. Mauris sapien massa, placerat non venenatis et, tincidunt eget leo.</p>
-                              <p style="margin-top:0;margin-bottom:18px;">Nam non ante risus. Vestibulum vitae eleifend nisl, quis vehicula justo. Integer viverra efficitur pharetra. Nullam eget erat nibh.</p>
-                              <p style="margin:0;"><a href="https://example.com/" style="background: #ff3884; text-decoration: none; padding: 10px 25px; color: #ffffff; border-radius: 4px; display:inline-block; mso-padding-alt:0;text-underline-color:#ff3884"><!--[if mso]><i style="letter-spacing: 25px;mso-font-width:-100%;mso-text-raise:20pt">&nbsp;</i><![endif]--><span style="mso-text-raise:10pt;font-weight:bold;">Claim yours now</span><!--[if mso]><i style="letter-spacing: 25px;mso-font-width:-100%">&nbsp;</i><![endif]--></a></p>
-                            </div>
-                            <!--[if mso]>
-                            </td>
-                            </tr>
-                            </table>
-                            <![endif]-->
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style="padding:30px;font-size:24px;line-height:28px;font-weight:bold;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
-                            <a href="http://www.example.com/" style="text-decoration:none;"><img src="https://assets.codepen.io/210284/1200x800-1.png" width="540" alt="" style="width:100%;height:auto;border:none;text-decoration:none;color:#363636;"></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style="padding:30px;background-color:#ffffff;">
-                            <p style="margin:0;">Duis sit amet accumsan nibh, varius tincidunt lectus. Quisque commodo, nulla ac feugiat cursus, arcu orci condimentum tellus, vel placerat libero sapien et libero. Suspendisse auctor vel orci nec finibus.</p>
-                          </td>
-                        </tr>
+                        """
+                        
                         <tr>
                           <td style="padding:30px;text-align:center;font-size:12px;background-color:#404040;color:#cccccc;">
                             <p style="margin:0 0 8px 0;"><a href="http://www.facebook.com/" style="text-decoration:none;"><img src="https://assets.codepen.io/210284/facebook_1.png" width="40" height="40" alt="f" style="display:inline-block;color:#cccccc;"></a> <a href="http://www.twitter.com/" style="text-decoration:none;"><img src="https://assets.codepen.io/210284/twitter_1.png" width="40" height="40" alt="t" style="display:inline-block;color:#cccccc;"></a></p>
