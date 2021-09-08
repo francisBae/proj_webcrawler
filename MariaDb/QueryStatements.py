@@ -22,3 +22,5 @@ def insertNewsInfo():
            ",sys_creation_date,sys_update_date)"\
            +"values (NEXTVAL(SEQ_NEWS_INFO), %s, %s, %s, %s, %s, SYSDATE(), SYSDATE())"
 
+def getCompanySscByName(company_name):
+    return "select * from tb_company_info where COMPANY_NAME =\'"+company_name+"\'"
