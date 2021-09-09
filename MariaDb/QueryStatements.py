@@ -24,3 +24,6 @@ def insertNewsInfo():
 
 def getCompanySscByName(company_name):
     return "select * from tb_company_info where COMPANY_NAME =\'"+company_name+"\'"
+
+def getCmmnCdInfo(grp_cd, cmmn_cd):
+    return "select * from TB_CMMN_CD where GRP_CD =\'"+grp_cd+"\' and CMMN_CD =\'"+cmmn_cd+"\'"

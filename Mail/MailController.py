@@ -1,6 +1,7 @@
 from datetime import datetime
 from Utils import DateConverter as dc
 from Keyword import CompanyController as cc
+from CmmnCd import CmmnCdController as ccc
 
 def getCurTimeNewsMailTitle():
     dtime = datetime.today().strftime("%Y%m%d%H%M")
@@ -145,14 +146,22 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
 
         subcnt = 0
         for newstitle in newsDict[company_name]:
-            subcnt += 1
+
             news_link = newsDict[company_name][newstitle]["link"]
-            news_pupdate = str(dc.convertStringToDate(newsDict[company_name][newstitle]["pubDate"]))
+            news_pupdate = dc.convertStringToDate(newsDict[company_name][newstitle]["pubDate"])
+
+            news_today_mail_yn = ccc.getCmmnCdVal('C0001','NEWS_TODAY_MAIL_YN')
+
+            if news_today_mail_yn == 'Y':
+                if dc.isDateTodayYn(news_pupdate) is False:
+                    continue #오늘 뉴스 아니라면 스킵
+
+            subcnt += 1
 
             html+=\
                     """<tr><td style="padding:20px;font-size:18px;line-height:28px;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
                     <p style="margin:0;">"""\
-                    +news_pupdate\
+                    +str(news_pupdate)\
                     +"""</p>
                     <p style="margin:0;">"""
             html+=str(subcnt)

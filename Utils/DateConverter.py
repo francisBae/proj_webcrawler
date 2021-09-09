@@ -33,3 +33,14 @@ def convertDateStringToKorean(dateStr):
     koreanDate = dateStr[0:4]+"년 "+str(int(dateStr[5:7]))+"월 "+str(int(dateStr[8:10]))+"일 "+dateStr[11:]
 
     return koreanDate
+
+def isDateTodayYn(dateObj):
+    # paramDate = datetime.strptime(dateObj,'%Y-%m-%d')
+    # todayDate = datetime.today().strftime('%Y-%m-%d')
+
+    if dateObj.date() == datetime.today().date():
+        return True
+    else:
+        return False
+
+
