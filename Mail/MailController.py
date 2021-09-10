@@ -32,6 +32,54 @@ def getRefinedNewsContentsForHtml(newsDict):
         # print(contents)
     return contents
 
+def getNewsHeader():
+    html="""<head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width,initial-scale=1">
+                <meta name="x-apple-disable-message-reformatting">
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&display=swap" rel="stylesheet">
+            
+            
+            <style>
+                table, td, div, h1, p {
+                    font-family: 'Noto Sans KR', sans-serif;
+                }
+                a:link {
+                  color: #87cefa !important;
+                }
+                a:visited {
+                  color: #2f4f4f !important;
+                }  
+                @media screen and (max-width: 530px) {
+                    .unsub {
+                            display: block;
+                            padding: 8px;
+                            margin-top: 14px;
+                            border-radius: 6px;
+                            background-color: #555555;
+                            text-decoration: none !important;
+                            <!-- CSS에서 나중에 설정한 값이 적용되지 않게 하려면 속성값 뒤에 !important -->
+                            font-weight: bold;
+                      }
+                    .col-lge {
+                        max-width: 100% !important;
+                    }
+                }
+                @media screen and (min-width: 531px) {
+                    .col-sml {
+                     max-width: 27% !important;
+                    }
+                    .col-lge {
+                     max-width: 73% !important;
+                     }
+                }
+            </style>
+            </head>
+        """
+    return html
+
 
 def getRefinedNewsContentsForResponsiveHtml(newsDict):
 
@@ -44,10 +92,12 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
     cnt = 1
     # newstitle = """'2차전지 부품제조' 지아이텍, 증권신고서 제출..."10월 코스닥 상장"""
     # company_image = "https://lh3.googleusercontent.com/proxy/WvN5LD33iG6opFBGXBhN0Rx6eFAFdJ5KkjSUMG_cFqX2Zxzx7k6f3w3FdE3SiHs-MPiDskNSrPWOO-eDB8Zulmias4rjmnPnBq0vhLoVEf0m"
-    headlinetitleLink = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRw1aWzSzE8CmpHUrma7dYdC702aw869hDNmQ&usqp=CAU"
-    headlinetitleImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Headlines_Today_logo.svg/1200px-Headlines_Today_logo.svg.png"
+    # headlinetitleLink = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRw1aWzSzE8CmpHUrma7dYdC702aw869hDNmQ&usqp=CAU"
+    headlinetitleImage = "https://lh3.googleusercontent.com/proxy/ppazQYBQM7k7lRXheLyE4rbwpe6J87Yw7o1Jy5cXh6QYr-VvKrhnA8mYNIy6uKRyhpyp3DfjwfUVN9KdNpzTLzjTWn7ZuyT58eR6W_G3F8QEO8UsYX-73nfZn5s_LgLC"
     # stockNumber = "005930"
     stockLink = "https://finance.naver.com/item/main.nhn?code="
+
+    print(newsDict)
 
     html = """\
     <!DOCTYPE html>
@@ -56,15 +106,14 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width,initial-scale=1">
                 <meta name="x-apple-disable-message-reformatting">
-            <title></title>
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&display=swap" rel="stylesheet">
             
             
             <style>
                 table, td, div, h1, p {
-                    font-family: 'Nanum Gothic', sans-serif;
+                    font-family: 'Noto Sans KR', sans-serif;
                 }
                 a:link {
                   color: #87cefa !important;
@@ -98,7 +147,7 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
             </style>
             </head>
             <body style="margin:0;padding:0;word-spacing:normal;background-color:#939297;">
-              <div role="article" aria-roledescription="email" lang="ko" style="text-size-adjust:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#939297;">
+              <div role="article" aria-roledescription="email" lang="ko" style="text-size-adjust:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#f0e5de;">
                 <table role="presentation" style="width:100%;border:none;border-spacing:0;">
                   <tr>
                     <td align="center" style="padding:0;">
@@ -109,14 +158,15 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
                       <![endif]-->
                       <table role="presentation" style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
                         <tr>
-                          <td style="padding:40px 30px 30px 30px;text-align:center;font-size:24px;font-weight:bold;">
-                            <a href=\""""\
-                            +headlinetitleLink\
-                            +"""" style="text-decoration:none;"><img src=\""""\
+                          <td style="padding:0;font-size:24px;line-height:28px;font-weight:bold;">
+                            <a href="http://www.naver.com/" style="text-decoration:none;"><img src=\""""\
                             +headlinetitleImage\
-                            +"""" width="300" alt="Logo" style="width:80%;max-width:300px;height:auto;border:none;text-decoration:none;color:#ffffff;"></a>
+                            +"""" width="600" alt="" style="width:100%;height:auto;display:block;border:none;text-decoration:none;color:#363636;"></a>
                           </td>
-                        </tr>"""
+                        </tr>
+                        
+                        
+                        """
     for company_name in newsDict:
         print(company_name)  # 삼성전자
         company = cc.getCompanyByName(company_name)
@@ -130,7 +180,7 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
 
         html+=\
             """<tr>
-               <td style="padding:0;font-size:24px;line-height:28px;font-weight:bold;">
+               <td style="padding:0;font-size:24px;line-height:28px;font-weight:bold;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
                 <a href="""\
                 +stockLink\
                 +"""" style="text-decoration:none;"><img src=\""""\
@@ -139,9 +189,9 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
               </td>
             </tr>
                 <tr>
-                  <td style="padding:30px;font-size:24px;line-height:28px;font-weight:bold;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
-                    <h1 style="margin-top:0;margin-bottom:16px;font-size:26px;line-height:32px;font-weight:bold;letter-spacing:-0.02em;">"""\
-                    +company_name+" ("+"""<a href=\""""+(stockLink)+"""">"""+stockNumber+"</a>)"\
+                  <td style="padding:20px 30px 20px 30px;font-size:24px;line-height:28px;font-weight:bold;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
+                    <h1 style="margin-top:0;margin-bottom:16px;text-align:center;font-size:26px;line-height:32px;font-weight:bold;letter-spacing:-0.02em;">"""\
+                    +company_name+" [ "+"""<a href=\""""+(stockLink)+"""" style="color: #5a616b">"""+stockNumber+"</a> ]"\
                     +"""</h1></tr>"""
 
         subcnt = 0
@@ -159,23 +209,24 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
             subcnt += 1
 
             html+=\
-                    """<tr><td style="padding:20px;font-size:18px;line-height:28px;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
-                    <p style="margin:0;">"""\
+                    """<tr><td style="padding:20px;font-size:20px;line-height:28px;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
+                    <p style="margin:0;font-size:15px; color:#a3a09d">"""\
                     +str(news_pupdate)\
                     +"""</p>
-                    <p style="margin:0;">"""
+                    <p style="margin:0; font-weight: 700;">"""
             html+=str(subcnt)
             html+=\
-                    """) <a href="""\
+                    """] <a href="""\
                     +news_link\
-                    +""">"""\
-                    +newstitle\
-                    +"""</a></p>
+                    +"""" style="color: #274c5e">"""
+
+            newstitle = newstitle.replace("<b>","<font color =\"#7f9eb2\">")
+            newstitle = newstitle.replace("</b>", "</font>")
+
+            html+=newstitle\
+            +"""</a></p>
                   </td>
                 </tr>"""
-
-
-
     html+=\
                         """
                         
