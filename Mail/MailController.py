@@ -91,7 +91,7 @@ def getHtmlFormat(htmlStr):
 
 
 def getRefinedNewsContentsForResponsiveHtml(newsDict):
-
+    #commit test after changing prj name
     # company_name = "삼성전자"
     # company = cc.getCompanyByName(company_name)
     # stockNumber = company.company_ssc
