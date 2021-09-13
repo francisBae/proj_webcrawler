@@ -1,13 +1,13 @@
 import datetime
 
-class Stock:
+class StockInfo:
     def __init__(self,itemcode, marketSum
                  # , per, eps, pbr
                  , now, diff, rate, quant, amount, high, low
                  # , risefall
                  ):
         self.itemcode = itemcode #종목코드
-        self.marketSum = marketSum #시가총액
+        self.marketSum = marketSum*1000000 #시가총액 / 네이버에서 100만 단위 추출
         # self.per = per
         # self.eps = eps
         # self.pbr = pbr
@@ -23,8 +23,8 @@ class Stock:
         self.curtime = datetime.datetime.now() #현재시간 기록
 
     def __init__(self,stock):
-        self.itemcode = stock['itemcode'] #종목코드
-        self.marketSum = stock['marketSum'] #시가총액
+        # self.itemcode = stock['itemcode'] #종목코드
+        self.marketSum = stock['marketSum']*1000000 #시가총액
         # self.per = per
         # self.eps = eps
         # self.pbr = pbr
