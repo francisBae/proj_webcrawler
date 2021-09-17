@@ -2,7 +2,7 @@ from datetime import datetime
 from Utils import DateConverter as dc
 from Keyword import CompanyController as cc
 from CmmnCd import CmmnCdController as ccc
-
+from Stock import StockInfo , StockController as sc
 from bs4 import BeautifulSoup as bs
 
 def getCurTimeNewsMailTitle():
@@ -82,11 +82,157 @@ def getNewsHeader():
         """
     return html
 
+def getCompanyImgTitle(stockLink, company_image, company_name, stockNumber):
+    html="""    
+                 <tr>
+                   <td style="padding:0;font-size:24px;line-height:28px;font-weight:bold;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
+                     <a href=""" \
+                     + stockLink \
+                     + """" style="text-decoration:none;"><img src=\"""" \
+                     + company_image \
+                     + """" width="600" alt="" style="width:100%;height:auto;display:block;border:none;text-decoration:none;color:#363636;"></a>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style="padding:20px 30px 20px 30px;font-size:24px;line-height:28px;font-weight:bold;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
+                     <h1 style="margin-top:0;margin-bottom:16px;text-align:center;font-size:26px;line-height:32px;font-weight:bold;letter-spacing:-0.02em;">""" \
+                     + company_name + " [ " + """<a href=\"""" + (
+                       stockLink) + """" style="color: #5a616b;text-decoration:none;">""" + stockNumber + "</a> ]" \
+                + """</h1>
+                 </tr>"""
+    return html
+
+def getCompanyStockTitle(stockLink, company_image, company_name, stockNumber):
+    stockInfo = sc.getStockInfoAPI(stockNumber)
+    stockRiseFallCd = sc.getStockRiseFallCd(stockInfo) #I : inc / D : dec / E : eq
+    stockRFColor = ''
+    stockRFIcon = ''
+    stockHighColor = ''
+    stockLowColor = ''
+
+    #전일대비 상승/하락여부
+    if stockRiseFallCd == 'I':
+        stockRFColor = '#ed344a;' #red
+        stockRFIcon = '▲'
+    elif stockRiseFallCd == 'D':
+        stockRFColor = '#40afde;' #blue
+        stockRFIcon = '▼'
+    else:
+        stockRFColor = '#4d4d4d;' #gray
+        stockRFIcon = '-' #━
+
+    if stockInfo.high>stockInfo.now:
+        stockHighColor = '#ed344a;'
+    else:
+        stockHighColor = '#000000;'
+
+    if stockInfo.low<stockInfo.now:
+        stockLowColor = '#40afde;'
+    else:
+        stockLowColor = '#000000;'
+
+    
+
+
+    html="""    
+                 <tr>
+                   <td align="center" style="padding:30px 30px 10px 30px;font-size:0;background-color:#ffffff;">
+                     <div class="col-sml" style="display:inline-block;width:100%;max-width:145px;vertical-align:top;text-align:left;font-family:Arial,sans-serif;font-size:14px;color:#363636;">
+                       <div align="center">
+                         <img src=\""""\
+                         +company_image\
+                        +"""" width="115" alt="" style="width:80%;max-width:115px;margin-bottom:20px;">
+                       </div>
+                       <p style="margin-top:0;margin-bottom:12px;font-size:16px;text-align:center;">"""\
+                        +company_name\
+                        +"""<span style="font-size:14px;color:gray;">&nbsp;"""\
+                        +stockNumber\
+                        +"""</span><p>
+				        <p style="margin-top:0;margin-bottom:12px;font-size:18px;text-align:center;color:"""\
+				        +stockRFColor\
+				        +""""">"""\
+                        +str(format(stockInfo.now,','))\
+                        +"""<br><span style="font-size:16px;">"""
+
+    print(stockInfo.diff)
+    print(type(stockInfo.diff))
+    # formattedDiff = format(stockInfo.diff,',')
+
+    stockRFInfo = stockRFIcon+" "+str(format(stockInfo.diff,','))+" ("
+    if int(stockInfo.diff)>0:
+        stockRFInfo+="+"
+    stockRFInfo += str(stockInfo.rate)+"%)"
+
+    html+=stockRFInfo\
+    +"""
+                          </span>
+                        </p>
+                      </div>
+                      <div class="col-lge" style="display:inline-block;width:100%;max-width:395px;vertical-align:top;padding-bottom:20px;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
+                      
+                        <table role="presentation" style="width:100%;max-width:600px;border:none;border-spacing:0;font-size:16px;line-height:22px;color:#363636;">
+				          <tr>
+				            <td align="center" style="padding:0;font-size:16px;line-height:28px;font-weight:bold;width:33%;">전일종가</td>
+					        <td align="center" style="padding:0;font-size:16px;line-height:28px;font-weight:bold;width:33%;">고가</td>
+					        <td align="center" style="padding:0;font-size:16px;line-height:28px;font-weight:bold;width:33%;">저가</td>
+				          </tr>
+				          <tr>
+				            <td align="center" style="padding:0;font-size:16px;line-height:28px;width:33%;">"""\
+                            +str(format(stockInfo.prev,','))\
+                        +"""</td> 
+					        <td align="center" style="padding:0;font-size:16px;line-height:28px;width:33%;color:"""\
+                            +stockHighColor\
+                            +"""">"""\
+                            +str(format(stockInfo.high,','))\
+                            +"""</td>
+					        <td align="center" style="padding:0;font-size:16px;line-height:28px;width:33%;color:"""\
+                            +stockLowColor\
+                            +"""">"""\
+                            +str(format(stockInfo.low,','))\
+                            +"""</td>
+				          </tr>
+				          <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+				          <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+				          <tr>
+				            <td align="center" style="padding:0;font-size:16px;line-height:28px;font-weight:bold;width:33%;">거래량</td>
+					        <td align="center" style="padding:0;font-size:16px;line-height:28px;font-weight:bold;width:33%;">시가총액</td>
+					        <td align="center" style="padding:0;font-size:16px;line-height:28px;font-weight:bold;width:33%;">거래대금(백만)	</td>
+				          </tr>
+				          <tr>
+				            <td align="center" style="padding:0;font-size:16px;line-height:28px;width:33%;">""" \
+                            + str(format(stockInfo.quant, ','))\
+                            +"""</td>
+				            <td align="center" style="padding:0;font-size:16px;line-height:28px;width:33%;">""" \
+                            + sc.getFormattedKoreanNumStr(stockInfo.marketSum)\
+                            +"""</td>
+				            <td align="center" style="padding:0;font-size:16px;line-height:28px;width:33%;">""" \
+                            + str(format(stockInfo.amount, ','))\
+                            +"""</td>
+				          </tr>
+				        </table>
+                      </div>
+                    </td>
+                   </tr>
+                   <tr>
+                     <td align="center" style="padding:20px 30px 20px 30px;font-size:18px;line-height:28px;font-weight:bold;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
+                       <p style="margin:0;">
+                         <a href=\""""\
+                         +stockLink\
+                         +""""style="text-decoration:none; background: #7C7877; text-decoration: none; padding: 10px 25px; color: #ebe6e1; border-radius: 4px; display:inline-block; mso-padding-alt:0;text-underline-color:#ff3884">
+                            <span style="mso-text-raise:10pt;font-weight:bold;">주가 정보 바로가기</span>
+                         </a>
+                       </p>
+                     </td>
+                   </tr>"""
+    return html
+
+
 def getHtmlFormat(htmlStr):
     html = """<!DOCTYPE html>
                 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">"""
     html+=htmlStr
     html+= """</html>"""
+
     return html
 
 
@@ -105,7 +251,8 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
     headlinetitleImage = "https://github.com/francisBae/proj_webcrawler/blob/master/static/titleImg.jpg?raw=true"
     # stockNumber = "005930"
     stockLink = "https://finance.naver.com/item/main.nhn?code="
-    news_today_mail_yn = ccc.getCmmnCdVal('C0001', 'NEWS_TODAY_MAIL_YN')
+    news_today_mail_yn = ccc.getCmmnCdVal('C0001', 'NEWS_TODAY_MAIL_YN') #오늘자 기사만 보낼지 여부
+    current_stock_info_mail_yn =  ccc.getCmmnCdVal('C0002', 'CURRENT_STOCK_INFO_MAIL_YN') #주가정보 전송할지 여부
 
     html = getNewsHeader()+"""
             <body style="margin:0;padding:0;word-spacing:normal;background-color:#939297;">
@@ -126,30 +273,21 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
         # print(company_name)  # 삼성전자
         company = cc.getCompanyByName(company_name)
         stockNumber = company.company_ssc
+        company_image = company.company_image
 
         if company.company_world_stock_yn == 'Y':
             stockLink = "https://m.stock.naver.com/index.html#/worldstock/stock/" + stockNumber+".O"
+
+            html+=getCompanyImgTitle(stockLink, company_image, company_name, stockNumber) #해외는 무조건 기존 타이틀대로
+
         else:
             stockLink = "https://finance.naver.com/item/main.nhn?code=" + stockNumber
-        company_image = company.company_image
 
-        html+=\
-            """
-                        <tr>
-                          <td style="padding:0;font-size:24px;line-height:28px;font-weight:bold;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
-                            <a href="""\
-                                +stockLink\
-                                +"""" style="text-decoration:none;"><img src=\""""\
-                                +company_image\
-                                +"""" width="600" alt="" style="width:100%;height:auto;display:block;border:none;text-decoration:none;color:#363636;"></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style="padding:20px 30px 20px 30px;font-size:24px;line-height:28px;font-weight:bold;background-color:#ffffff;border-bottom:1px solid #f0f0f5;border-color:rgba(201,201,207,.35);">
-                            <h1 style="margin-top:0;margin-bottom:16px;text-align:center;font-size:26px;line-height:32px;font-weight:bold;letter-spacing:-0.02em;">"""\
-                                +company_name+" [ "+"""<a href=\""""+(stockLink)+"""" style="color: #5a616b;text-decoration:none;">"""+stockNumber+"</a> ]"\
-                        +"""</h1>
-                        </tr>"""
+            if current_stock_info_mail_yn == 'Y': #현재주가를 표시하기로 했을 때
+                html+=getCompanyStockTitle(stockLink, company_image, company_name, stockNumber)
+            else: #표시 안하기로 하면
+                html+=getCompanyImgTitle(stockLink, company_image, company_name, stockNumber)
+
         subcnt = 0
         for newstitle in newsDict[company_name]:
             news_link = newsDict[company_name][newstitle]["link"]
