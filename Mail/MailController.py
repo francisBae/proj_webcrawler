@@ -273,7 +273,12 @@ def getRefinedNewsContentsForResponsiveHtml(newsDict):
         # print(company_name)  # 삼성전자
         company = cc.getCompanyByName(company_name)
         stockNumber = company.company_ssc
-        company_image = company.company_image
+        # company_image = company.company_image
+        company_image = "https://github.com/francisBae/python-naver-news-crawler/blob/master/static/companyImage/"\
+                        +str(stockNumber)\
+                        +".png?raw=true"
+        #이미지가 자주 만료되는 현상으로 인해 깃허브 저장소에 업로드
+
 
         if company.company_world_stock_yn == 'Y':
             stockLink = "https://m.stock.naver.com/index.html#/worldstock/stock/" + stockNumber+".O"
