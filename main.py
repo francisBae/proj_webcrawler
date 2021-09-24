@@ -6,6 +6,8 @@ from MailSender import MailSender as ms
 from Mail import MailController as mc
 from Keyword import CompanyController as cc, InterestController as ic, KeywordController as kc
 from News import NewsController as nc
+import schedule
+import time
 
 def main():
     # 구독자 리스트 조회
@@ -42,6 +44,12 @@ def main():
     nc.insertNewsInfo(newsList)
 
 if __name__ == "__main__":
-	main()
+	# main()
+    schedule.every().days.at("22:00").do(main)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
 
 
