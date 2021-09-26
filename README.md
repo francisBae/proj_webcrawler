@@ -8,9 +8,9 @@ This project is a side project crawling news headlines posted in Naver and sendi
 
 ## Contents
 1. [System](#system)
-2. [UI/UX Design](#ui/ux-design)
+2. [UI/UX Design](#uiux-design)
 3. [DB Models](#db-models)
-4. [To Do](#to-do)
+4. [ToDo](#todo)
 5. [Appendix](#appendix)
 
 ## System
@@ -41,7 +41,7 @@ There are **5 main events** in this system and the events are as follows.
     5. Insert News Info to Database (DB에 뉴스 정보 저장)
     - NewsController.insertNewsInfo()
 
-## UI/UX Design
+## UIUX Design
 <p align="center">
 	<img src="https://github.com/francisBae/python-naver-news-crawler/blob/master/static/readme/reactive.gif?raw=true", width="550">
 </p>
