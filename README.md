@@ -8,10 +8,10 @@ This project is a side project crawling news headlines posted in Naver and sendi
 
 ## Contents
 1. [System](#system)
-2. [UI/UX Design](#UI/UX Design)
-3. [DB Models](#DB Models)
-4. [To Do](#To Do)
-5. [Appendix](#Appendix)
+2. [UI/UX Design](#ui/ux-design)
+3. [DB Models](#db-models)
+4. [To Do](#to-do)
+5. [Appendix](#appendix)
 
 ## System
 
